@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
+import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.service.EConnectService;
@@ -113,6 +114,20 @@ public class EConnectController {
 			e.printStackTrace();
 		}
 		return getCustomerAppliedJobsList;
+	}
+	
+	//logic to the user profile information once he logs in
+	@RequestMapping(value = "/getUserProfileDetails", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public GetUserProfileResponse getUserProfileDetails(@RequestParam String emailId) {
+    	GetUserProfileResponse getUserProfileDetails = null;
+		try {
+			
+			getUserProfileDetails = this.econnectService.getUserProfileDetails(emailId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getUserProfileDetails;
 	}
 	
 }

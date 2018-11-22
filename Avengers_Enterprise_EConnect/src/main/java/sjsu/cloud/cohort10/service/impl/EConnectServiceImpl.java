@@ -25,6 +25,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import sjsu.cloud.cohort10.dao.EConnectDAO;
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
+import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.dto.UserSignInRequest;
@@ -133,5 +134,13 @@ public class EConnectServiceImpl implements EConnectService
         }
 		return outputMap;
     }
+
+	@Override
+	public GetUserProfileResponse getUserProfileDetails(String emailId) {
+
+		//logic to call the DB to the user profile details
+		GetUserProfileResponse getUserProfileDetails = econnectDAO.getUserProfileDetails(emailId);
+		return getUserProfileDetails;
+	}
 
 }

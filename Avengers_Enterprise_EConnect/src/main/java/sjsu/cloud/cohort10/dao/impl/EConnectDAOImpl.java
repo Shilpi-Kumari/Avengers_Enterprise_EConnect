@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import sjsu.cloud.cohort10.dao.EConnectDAO;
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
+import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserDetailsDTO;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
@@ -170,6 +171,18 @@ public class EConnectDAOImpl implements EConnectDAO{
 			getCustomerAppliedJobsList.add(getCustomerAppliedJobs);
 		}
 		return getCustomerAppliedJobsList;
+	}
+
+	@Override
+	public GetUserProfileResponse getUserProfileDetails(String emailId) {
+		
+			String sql = "SELECT * FROM CUSTOMER_INFO WHERE EmailId = ?";
+			
+			GetUserProfileResponse getUserProfileDetails = (GetUserProfileResponse) jdbcTemplate.queryForObject(
+					sql, new Object[] { emailId }, 
+					new BeanPropertyRowMapper(GetUserProfileResponse.class));
+			
+		return getUserProfileDetails;
 	}
 
 }

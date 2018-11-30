@@ -3,6 +3,8 @@ package sjsu.cloud.cohort10.dto;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+
 public class JobsPostRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +13,7 @@ public class JobsPostRequest implements Serializable {
 	private String jobTitle;
 	private String organization;
 	private String location;
-	private Timestamp dueDate;
+	private String dueDate;
 	private String jobDescription;
 	
 	public String getJobType() {
@@ -38,10 +40,10 @@ public class JobsPostRequest implements Serializable {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Timestamp getDueDate() {
+	public String getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
 	public String getJobDescription() {

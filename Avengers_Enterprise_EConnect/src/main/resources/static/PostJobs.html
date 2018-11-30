@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+        
+    /* On small screens, set height to 'auto' for the grid */
+    @media screen and (max-width: 767px) {
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<script>
+
+function logout(){
+	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "emailId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	//document.cookie = "account_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	//document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
+
+
+
+
+$(function() {
+    $("#post_jobs").submit(function(e) {
+	e.preventDefault();
+	var jobsPostRequest = {
+			"jobType": $('#JobType').val(),
+			"jobTitle": $('#JobTitle').val(),
+			"organization": $('#Organization').val(),
+			"location": $('#Location').val(),
+			"dueDate": $('#DueDate').val(),
+			"jobDescription": $('#JobDescription').val()	
+	}
+	alert(JSON.stringify(jobsPostRequest));
+		//var jobsPostRequest = new FormData(this);
+		//var jobsPostRequest = $(this).serialize();
+    	//$('#spinner').show();
+        $.ajax({
+            url: "/adminJobsPost",
+            type: 'POST',
+            contentType : 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(jobsPostRequest),
+            success :function(data) {
+            	var json = JSON.stringify(data);
+            	if(data.status=="true")
+            	{document.getElementById('error').innerHTML="Job Posted Successfully...!!!";
+            	document.getElementById("JobType").value = "";
+            	document.getElementById("JobTitle").value = "";
+            	document.getElementById("Organization").value = "";
+            	document.getElementById("Location").value = "";
+            	document.getElementById("DueDate").value = "";
+            	document.getElementById("JobDescription").value = "";
+            	}
+            	//$('#spinner').hide();
+              }
+        });
+    });
+});
+
+$(document).ready(function (){
+	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var lastName = document.cookie.replace(/(?:(?:^|.*;\s*)lastName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var emailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	document.getElementById("displayUser").innerHTML='Welcome ' + firstName +" "+lastName;
+});
+</script>
+
+<nav class="navbar navbar-inverse visible-xs">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Dashboard</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Post Jobs</a></li>
+        <li><a href="#">Log out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav hidden-xs">
+      <h3>E-Connect Portal</h3>
+      <div align='left'><span style="font-size:150%" id='displayUser'></span></div><br>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="Home.html">Dashboard</a></li>
+        <li><a href="Profile.html">Profile</a></li>
+        <li class="active" id='admin'><a href="PostJobs.html">Post Jobs</a></li>
+        <li id='admin1'><a href="AppliedJobs.html">Applied Jobs</a></li>
+        <li><a href=index.html onClick=logout()>
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+	 </a></li>
+      </ul><br>
+    </div>
+    <br>
+    
+    <div class="col-sm-9">
+      <div class="well">
+        <form id="post_jobs" method="post" enctype='application/json'>
+	 		Job Type: <select id="JobType" name="JobType">
+  				<option value="">Select Job Type</option>
+ 				<option value="Internship">Internship</option>
+ 			    <option value="Part-Time">Part-Time</option>
+				<option value="Full-Type">Full-Type</option>
+		    </select><br><br>
+		    Job Title: <select id="JobTitle" name="JobTitle">
+  				<option value="">Select Job Title</option>
+ 				<option value="UI Developer">UI Developer</option>
+ 			    <option value="Backend Developer">Backend Developer</option>
+				<option value="Software Engineer">Software Engineer</option>
+		    </select><br><br>
+  			Organization: <input type="text" name="Organization" id="Organization" required><br><br>
+  			Job Location: <input type="text" name="Location" id="Location" required><br><br>
+  			Job Due Date: <input type="date" name="DueDate" id="DueDate" ><br><br>
+  			Job Description:<br> <textarea rows="7" cols="55" name="JobDescription" id="JobDescription"></textarea>
+  			<span id='message'></span>
+	 		<p id='error' style="color:green;"></p>
+  			<input type="submit" value="Submit">
+  			
+	</form>
+
+	
+      </div>
+   
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

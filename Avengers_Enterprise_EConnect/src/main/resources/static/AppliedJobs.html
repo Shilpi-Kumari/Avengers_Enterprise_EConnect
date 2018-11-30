@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+        
+    /* On small screens, set height to 'auto' for the grid */
+    @media screen and (max-width: 767px) {
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<script>
+
+
+function logout(){
+	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "emailId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	//document.cookie = "account_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	//document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
+
+
+
+$(document).ready(function (){
+	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var lastName = document.cookie.replace(/(?:(?:^|.*;\s*)lastName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var emailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	document.getElementById("displayUser").innerHTML='Welcome ' + firstName +" "+lastName;
+	$.ajax({
+		type: 'GET',
+		url: '/getCustomerAppliedJobsList',
+		data: { emailId: emailId },
+		success: function (data) {
+			var jsonResponse = JSON.stringify(data);
+			var jsonData = JSON.parse(jsonResponse);
+			alert(jsonResponse);
+			var display_data = "";
+			$("#t01").find("tr:not(:first)").remove();
+			for (var i = 0; i < jsonData.length; i++) {
+				var table = document.getElementById("t01");
+                var row = table.insertRow(-1);
+                var cell0 = row.insertCell(0);
+                var cell1 = row.insertCell(1);
+                var cell2 = row.insertCell(2);
+                var cell3 = row.insertCell(3);
+                var cell4 = row.insertCell(4);
+                var cell5 = row.insertCell(5);
+                var cell6 = row.insertCell(6);
+                cell0.innerHTML = jsonData[i].customerEmailId;
+                cell1.innerHTML = jsonData[i]['getCustomerJobResponse'].jobType;
+                cell2.innerHTML = jsonData[i]['getCustomerJobResponse'].jobTitle;
+                cell3.innerHTML = jsonData[i]['getCustomerJobResponse'].organization
+                cell4.innerHTML = jsonData[i]['getCustomerJobResponse'].location;
+                cell5.innerHTML = jsonData[i]['getCustomerJobResponse'].dueDate;
+                cell6.innerHTML = jsonData[i]['getCustomerJobResponse'].jobDescription;
+			}
+		},
+		error: function (error) {
+			var errorjson = JSON.stringify(error);
+		}
+	});
+});
+</script>
+
+<nav class="navbar navbar-inverse visible-xs">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="Profile.html">Profile</a></li>
+        <li><a href="PostJobs.html">Post Jobs</a></li>
+        <li><a href="#">Log out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav hidden-xs">
+      <h3>E-Connect Portal</h3>
+      <div align='left'><span style="font-size:150%" id='displayUser'></span></div><br>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="Home.html">Dashboard</a></li>
+        <li><a href="Profile.html">Profile</a></li>
+        <li id='admin'><a href="PostJobs.html">Post Jobs</a></li>
+        <li class="active" id='admin1'><a href="AppliedJobs.html">Applied Jobs</a></li>
+        <li><a href=index.html onClick=logout()>
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+	 </a></li>
+      </ul><br>
+    </div>
+    <br>
+    
+    <div class="col-sm-9">
+      <div class="well">
+      <h1 align="center">Applied Jobs</h1>
+ 		<table style="width:100%" id="t01" border="1">
+ 		<tr>
+ 		<th>User Email ID</th>
+   		 <th>Job Type</th> 
+   		 <th>Job Title</th>
+   		 <th>Organization</th>
+   		 <th>Location</th>
+   		 <th>Last Date</th>
+   		 <th>Job Description</th>
+ 		<tr>
+ 		</table>
+        
+      </div>
+      </div>
+   
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

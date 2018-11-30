@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+        
+    /* On small screens, set height to 'auto' for the grid */
+    @media screen and (max-width: 767px) {
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<script>
+
+
+function logout(){
+	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "emailId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	//document.cookie = "account_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	//document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
+
+
+
+$(document).ready(function (){
+	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var lastName = document.cookie.replace(/(?:(?:^|.*;\s*)lastName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var emailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	document.getElementById("displayUser").innerHTML='Welcome ' + firstName +" "+lastName;
+	$.ajax({
+		type: 'GET',
+		url: '/getUserProfileDetails',
+		data: { emailId: emailId },
+		success: function (data) {
+			var jsonResponse = JSON.stringify(data);
+			var jsonData = JSON.parse(jsonResponse);
+			//alert(jsonResponse);
+			var display_data = "";
+			
+				display_data += '<p>First Name: ' + jsonData.firstName + '<p>';
+				display_data += '<p>Last Name: ' + jsonData.lastName + '</p>';
+				display_data += '<p>Email ID: ' + jsonData.emailId + '</p>';
+				display_data += '<p>Education: ' + jsonData.education + '</p>';
+				display_data += '<p>Industry Experience: ' + jsonData.industryExperience + '</p>';
+				display_data += '<p>GitHub Link: ' + jsonData.githubLink + '</p>';	
+				display_data += '<p>Resume: ' + jsonData.githubLink + '</p>';
+			
+			$('#t01').append(display_data);
+		},
+		error: function (error) {
+			var errorjson = JSON.stringify(error);
+		}
+	});
+});
+</script>
+
+<nav class="navbar navbar-inverse visible-xs">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+      
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Dashboard</a></li>
+        <li  class="active" ><a href="Profile.html">Profile</a></li>
+        <li><a href="PostJobs.html">Post Jobs</a></li>
+        <li><a href="#">Log out</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav hidden-xs">
+      <h3>E-Connect Portal</h3>
+      <div align='left'><span style="font-size:150%" id='displayUser'></span></div><br>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="Home.html">Dashboard</a></li>
+        <li  class="active"><a href="Profile.html">Profile</a></li>
+        <li id='admin'><a href="PostJobs.html">Post Jobs</a></li>
+        <li id='admin1'><a href="AppliedJobs.html">Applied Jobs</a></li>
+        <li><a href=index.html onClick=logout()>
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+	 </a></li>
+      </ul><br>
+    </div>
+    <br>
+    
+    <div class="col-sm-9">
+      <div class="well">
+      <h1 align="center">Profile Details</h1>
+ 		<div class="row" id="t01">
+        
+      </div>
+      </div>
+   
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

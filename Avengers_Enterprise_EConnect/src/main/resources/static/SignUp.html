@@ -170,25 +170,20 @@ var check = function() {
 $(function() {
     $("#create_user").submit(function(e) {
     	e.preventDefault();
-    	var userSignUpRequest = {
-    			"firstName": $('#firstName').val(),
-    			"lastName": $('#lastName').val(),
-    			"emailId": $('#emailId').val(),
-    			"password": $('#password').val(),
-    			"securityQ1": $('#securityQ1').val(),
-    			"securityQ2": $('#securityQ2').val(),
-    			"securityV1": $('#securityV1').val(),
-    			"securityV2": $('#securityV2').val()	
-    	}
+		
+		var formData = new FormData(this);
+		
         $.ajax({
             url: "/userSignUp",
             type: 'POST',
-            contentType : 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(userSignUpRequest),
+            cache: false,
+            contentType: false,
+            processData: false,
+            enctype: 'multipart/form-data',
+        	data: formData,
             success :function(data) {
                 var json = JSON.stringify(data);
-                alert(json);
+                //alert(json);
                 if(data.status=="true"){
                 	document.getElementById('error').innerHTML="Sign Up is Successfull..!! Click back button to login";
                 	document.getElementById('firstName').value="";
@@ -216,28 +211,16 @@ $(function() {
       <h1 style="text-align:center;color:green">Sign Up Here!!</h1>
 	  <p id='error' style="color:red;"></p>
       <div class="col">
-		<input type="text" name="firstname" id="firstName" placeholder="First Name" required >
-  			<input type="text" name="lastname" id="lastName" placeholder="Last Name" required>
-  			<input type="email" name="emailid" id="emailId" placeholder="Email Id" required>
+		<input type="text" name="firstName" id="firstName" placeholder="First Name" required >
+  			<input type="text" name="lastName" id="lastName" placeholder="Last Name" required>
+  			<input type="email" name="emailId" id="emailId" placeholder="Email Id" required>
   			<input type="password" name="password" id="password"  placeholder="Password" onkeyup='check();' required>
   			<input type="password" name="confirm_password" id="confirm_password"  placeholder="Confirm Password" onkeyup='check();' required>
   			<span id='message'></span>
-  			<select id="securityV1">
-  				<option value="">Select First Security Question</option>
- 				<option value="Q1">In what city or town was your first job?</option>
- 			    <option value="Q2">Where were you when you first heard about 9/11?</option>
-				<option value="Q3">What is the name of your favorite childhood friend?</option>
-				<option value="Q3">What was your dream job as a child?</option> 
-		    </select>
-		    <input type="text" name="securityQ1" id="securityQ1" required >
-		    <select id="securityV2">
-  				<option value="">Select First Security Question</option>
- 				<option value="Q1">In what city or town was your first job?</option>
- 			    <option value="Q2">Where were you when you first heard about 9/11?</option>
-				<option value="Q3">What is the name of your favorite childhood friend? </option>
-				<option value="Q3">What was your dream job as a child?</option>
-		    </select>
-		    <input type="text" name="securityQ2" id="securityQ2" required >
+  			<input type=education name="education" id="education" placeholder="Higher Education" required>
+  			<input type="industryExperience" name="industryExperience" id="industryExperience" placeholder="Industry Experience" required>
+  			<input type="githubLink" name="githubLink" id="githubLink" placeholder="GitHub Link" required>
+  			<input type="file" name="file" id="file" required>
         <input type="submit" value="Submit">
         <input type="button" value="Back to login page" onclick="window.location.href = 'Index.html';">
       </div>

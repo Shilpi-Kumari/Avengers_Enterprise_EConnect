@@ -12,7 +12,7 @@ public class GetJobsResponse implements Serializable {
 	private String jobTitle;
 	private String organization;
 	private String location;
-	private Timestamp dueDate;
+	private String dueDate;
 	private String jobDescription;
 	
 	public Integer getId() {
@@ -45,10 +45,10 @@ public class GetJobsResponse implements Serializable {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Timestamp getDueDate() {
+	public String getDueDate() {
 		return dueDate;
 	}
-	public void setDueDate(Timestamp dueDate) {
+	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
 	public String getJobDescription() {

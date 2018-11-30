@@ -45,6 +45,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 			
 		}catch (Exception e)
 		{
+			e.printStackTrace();
 			outputMap.put("status", "false");
 		}
 		return outputMap;
@@ -80,7 +81,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 		HashMap<String, String> outputMap = new HashMap<>();
 		
 		try {
-			String sql = "INSERT INTO CUSTOMER_INFO (JobType, JobTitle, Organization, "
+			String sql = "INSERT INTO JOBS (JobType, JobTitle, Organization, "
 					+ "Location, DueDate, JobDescription) "
 					+ "VALUES (?, ?, ?, ?, ?, ?)";
 			
@@ -92,6 +93,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 			
 		}catch (Exception e)
 		{
+			//e.printStackTrace();
 			outputMap.put("status", "false");
 		}
 		return outputMap;
@@ -115,7 +117,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 			getJobs.setJobTitle((String)obj.get("JobTitle"));
 			getJobs.setOrganization((String)obj.get("Organization"));
 			getJobs.setLocation((String)obj.get("Location"));
-			getJobs.setDueDate((Timestamp)obj.get("DueDate"));
+			getJobs.setDueDate((String)obj.get("DueDate"));
 			getJobs.setJobDescription((String)obj.get("JobDescription"));
 			
 			getJobsList.add(getJobs);
@@ -163,7 +165,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 			getJobs.setJobTitle((String)obj.get("JobTitle"));
 			getJobs.setOrganization((String)obj.get("Organization"));
 			getJobs.setLocation((String)obj.get("Location"));
-			getJobs.setDueDate((Timestamp)obj.get("DueDate"));
+			getJobs.setDueDate((String)obj.get("DueDate"));
 			getJobs.setJobDescription((String)obj.get("JobDescription"));
 			
 			getCustomerAppliedJobs.setGetCustomerJobResponse(getJobs);

@@ -23,9 +23,35 @@
   </style>
 </head>
 <body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
 
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Username', 'Internship', 'Part Time Jobs', 'Full Time Jobs'],
+          ['Shilpi', 100, 40, 20],
+          ['Poorva', 117, 46, 25],
+          ['Sumanth', 66, 112, 30],
+          ['Harshit', 103, 54, 35],
+          ['Sai Kiran', 103, 54, 35],
+      ]);
+
+        var options = {
+          chart: {
+            title: 'Statistics of jobs applied by users',
+            subtitle: 'Includes the intern, part time and full time positions',
+          },
+          bars: 'vertical' 
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
 <script>
-
 
 function logout(){
 	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -37,6 +63,45 @@ function logout(){
 };
 
 
+
+
+$(function() {
+    $("#post_jobs").submit(function(e) {
+	e.preventDefault();
+	var jobsPostRequest = {
+			"jobType": $('#JobType').val(),
+			"jobTitle": $('#JobTitle').val(),
+			"organization": $('#Organization').val(),
+			"location": $('#Location').val(),
+			"dueDate": $('#DueDate').val(),
+			"jobDescription": $('#JobDescription').val()	
+	}
+	//alert(JSON.stringify(jobsPostRequest));
+		//var jobsPostRequest = new FormData(this);
+		//var jobsPostRequest = $(this).serialize();
+    	//$('#spinner').show();
+        $.ajax({
+            url: "/adminJobsPost",
+            type: 'POST',
+            contentType : 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(jobsPostRequest),
+            success :function(data) {
+            	var json = JSON.stringify(data);
+            	if(data.status=="true")
+            	{document.getElementById('error').innerHTML="Job Posted Successfully...!!!";
+            	document.getElementById("JobType").value = "";
+            	document.getElementById("JobTitle").value = "";
+            	document.getElementById("Organization").value = "";
+            	document.getElementById("Location").value = "";
+            	document.getElementById("DueDate").value = "";
+            	document.getElementById("JobDescription").value = "";
+            	}
+            	//$('#spinner').hide();
+              }
+        });
+    });
+});
 
 $(document).ready(function (){
 	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -51,30 +116,6 @@ $(document).ready(function (){
 		document.getElementById("admin").style.display = "none";
 		document.getElementById("admin1").style.display = "none";
 	}
-	$.ajax({
-		type: 'GET',
-		url: '/getUserProfileDetails',
-		data: { emailId: emailId },
-		success: function (data) {
-			var jsonResponse = JSON.stringify(data);
-			var jsonData = JSON.parse(jsonResponse);
-			//alert(jsonResponse);
-			var display_data = "";
-			
-				display_data += '<p style="color:blue;">First Name: ' + jsonData.firstName + '<p>';
-				display_data += '<p style="color:blue;">Last Name: ' + jsonData.lastName + '</p>';
-				display_data += '<p style="color:blue;">Email ID: ' + jsonData.emailId + '</p>';
-				display_data += '<p style="color:blue;">Education: ' + jsonData.education + '</p>';
-				display_data += '<p style="color:blue;">Industry Experience: ' + jsonData.industryExperience + '</p>';
-				display_data += '<p style="color:blue;">GitHub Link: ' + jsonData.githubLink + '</p>';	
-				display_data += '<p style="color:blue;">Resume: ' + jsonData.githubLink + '</p>';
-			
-			$('#t01').append(display_data);
-		},
-		error: function (error) {
-			var errorjson = JSON.stringify(error);
-		}
-	});
 });
 </script>
 
@@ -91,9 +132,9 @@ $(document).ready(function (){
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="#">Dashboard</a></li>
-        <li  class="active" ><a href="Profile.html">Profile</a></li>
-        <li><a href="PostJobs.html">Post Jobs</a></li>
+        <li class="active"><a href="#">Dashboard</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Post Jobs</a></li>
         <li><a href="#">Log out</a></li>
       </ul>
     </div>
@@ -107,8 +148,8 @@ $(document).ready(function (){
       <div align='left'><span style="font-size:150%" id='displayUser'></span></div><br>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="Home.html">Dashboard</a></li>
-        <li  class="active"><a href="Profile.html">Profile</a></li>
-        <li id='admin'><a href="PostJobs.html">Post Jobs</a></li>
+        <li><a href="Profile.html">Profile</a></li>
+        <li class="active" id='admin'><a href="PostJobs.html">Post Jobs</a></li>
         <li id='admin1'><a href="AppliedJobs.html">Applied Jobs</a></li>
         <li id='admin1'><a href="graphJobs.html">Graph</a></li>
         <li><a href=index.html onClick=logout()>
@@ -120,10 +161,9 @@ $(document).ready(function (){
     
     <div class="col-sm-9">
       <div class="well">
-      <h1 align="center">Profile Details</h1>
- 		<div class="row" id="t01">
-        
-      </div>
+        <div id="barchart_material" style="width: 900px; height: 500px;"></div>
+
+	
       </div>
    
     </div>

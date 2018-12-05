@@ -45,7 +45,7 @@ function logout(){
 
 
 
-function applyJob(jobId){
+function lyJob(jobId){
 	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var userEmailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	//alert(userEmailId);
@@ -59,6 +59,16 @@ function applyJob(jobId){
         document.getElementById('error').innerHTML="Applied Successfully...!!!";
        }
     });
+};
+
+function applyJob(jobId,recruiterEmail){
+	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var userEmailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	alert(recruiterEmail);
+	document.cookie="jobId="+jobId;
+	window.location.href = 'ApplyJob.html';
+	//alert(userEmailId);
+	//alert(jobId);
 };
 
 $(document).ready(function () {
@@ -120,7 +130,7 @@ $(function() {
     			var display_data = "";
     			var jsonResponse = JSON.stringify(data);
     			var jsonData = JSON.parse(jsonResponse);
-    			//alert(jsonResponse);
+    			alert(jsonResponse);
     			if(jsonData.length == 0)
     				{document.getElementById('error').innerHTML="No Jobs Found...!!!";}
     			else{
@@ -135,7 +145,8 @@ $(function() {
     				display_data += '<span style="color:green;">Already Applied</span>';
     				}
     				else{
-    				display_data += '<button onClick=applyJob('+jsonData[i].id+')>Apply</button>';
+    				//display_data += '<button onClick=applyJob('+jsonData[i].id+')>Apply</button>';
+    				display_data += '<button onClick=applyJob('+jsonData[i].id+','+jsonData[i].recruiterEmail+')>Apply</button>';
     				}
     				display_data += '</div>';
     				display_data += '</div>';
@@ -164,9 +175,9 @@ $(function() {
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="#">Age</a></li>
-        <li><a href="#">Gender</a></li>
-        <li><a href="#">Geo</a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
       </ul>
     </div>
   </div>
@@ -182,6 +193,7 @@ $(function() {
         <li><a href="Profile.html">Profile</a></li>
         <li id='admin'><a href="PostJobs.html">Post Jobs</a></li>
         <li id='admin1'><a href="AppliedJobs.html">Applied Jobs</a></li>
+        <li id='admin1'><a href="graphJobs.html">Graph</a></li>
         <li><a href=index.html onClick=logout()>
           <span class="glyphicon glyphicon-log-out"></span> Log out
 	 </a></li>

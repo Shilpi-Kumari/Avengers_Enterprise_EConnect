@@ -1,7 +1,6 @@
 
 package sjsu.cloud.cohort10.dao.impl;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +15,7 @@ import sjsu.cloud.cohort10.dao.EConnectDAO;
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
 import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
+import sjsu.cloud.cohort10.dto.JobApplied;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserDetailsDTO;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
@@ -34,12 +34,12 @@ public class EConnectDAOImpl implements EConnectDAO{
 		
 		try {
 			String sql = "INSERT INTO CUSTOMER_INFO (FirstName, LastName, EmailId, Password,"
-					+ "Education, IndustryExperience, GithubLink) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+					+ "Education, IndustryExperience, GithubLink, Role) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			jdbcTemplate.update(sql, userRequest.getFirstName(), userRequest.getLastName(), 
 					userRequest.getEmailId(), userRequest.getPassword(), userRequest.getEducation(),
-					userRequest.getIndustryExperience(), userRequest.getGithubLink());
+					userRequest.getIndustryExperience(), userRequest.getGithubLink(), "user");
 			
 			outputMap.put("status", "true");
 			
@@ -67,6 +67,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 			outputMap.put("firstname", userDetailsDTO.getFirstName());
 			outputMap.put("lastname", userDetailsDTO.getLastName());
 			outputMap .put("emailid", userDetailsDTO.getEmailId());
+			outputMap .put("role", userDetailsDTO.getRole());
 		}catch (Exception e)
 		{
 			outputMap.put("status", "false");
@@ -185,6 +186,28 @@ public class EConnectDAOImpl implements EConnectDAO{
 					new BeanPropertyRowMapper(GetUserProfileResponse.class));
 			
 		return getUserProfileDetails;
+	}
+
+	@Override
+	public List<JobApplied> getJobsAppliedList() {
+		
+		String sql = "SELECT * FROM JOBS_APPLIED";
+		
+		List<JobApplied> getJobsAppliedList = new ArrayList<JobApplied>();
+		
+		List<java.util.Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+		
+		for(java.util.Map<String, Object> obj : result)
+		{
+			JobApplied jobsApplied = new JobApplied();
+			
+			jobsApplied.setId((String)obj.get("JobId"));
+			jobsApplied.setCustomerEmailId((String)obj.get("CustomerEmailId"));
+			
+			getJobsAppliedList.add(jobsApplied);
+			
+		}
+		return getJobsAppliedList;
 	}
 
 }

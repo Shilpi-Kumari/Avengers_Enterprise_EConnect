@@ -42,7 +42,15 @@ $(document).ready(function (){
 	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var lastName = document.cookie.replace(/(?:(?:^|.*;\s*)lastName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var emailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var role = document.cookie.replace(/(?:(?:^|.*;\s*)role\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	document.getElementById("displayUser").innerHTML='Welcome ' + firstName +" "+lastName;
+	if(role == 'admin')
+	{document.getElementById("admin").style.display = "block";
+	document.getElementById("admin1").style.display = "block";}
+	else{
+		document.getElementById("admin").style.display = "none";
+		document.getElementById("admin1").style.display = "none";
+	}
 	$.ajax({
 		type: 'GET',
 		url: '/getCustomerAppliedJobsList',
@@ -50,7 +58,7 @@ $(document).ready(function (){
 		success: function (data) {
 			var jsonResponse = JSON.stringify(data);
 			var jsonData = JSON.parse(jsonResponse);
-			alert(jsonResponse);
+			//alert(jsonResponse);
 			var display_data = "";
 			$("#t01").find("tr:not(:first)").remove();
 			for (var i = 0; i < jsonData.length; i++) {
@@ -104,7 +112,7 @@ $(document).ready(function (){
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h3>E-Connect Portal</h3>
+      <h3 style="color:blue;">E-Connect Portal</h3>
       <div align='left'><span style="font-size:150%" id='displayUser'></span></div><br>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="Home.html">Dashboard</a></li>
@@ -123,13 +131,13 @@ $(document).ready(function (){
       <h1 align="center">Applied Jobs</h1>
  		<table style="width:100%" id="t01" border="1">
  		<tr>
- 		<th>User Email ID</th>
-   		 <th>Job Type</th> 
-   		 <th>Job Title</th>
-   		 <th>Organization</th>
-   		 <th>Location</th>
-   		 <th>Last Date</th>
-   		 <th>Job Description</th>
+ 		<th style="text-align:center">User Email ID</th>
+   		 <th style="text-align:center">Job Type</th> 
+   		 <th style="text-align:center">Job Title</th>
+   		 <th style="text-align:center">Organization</th>
+   		 <th style="text-align:center">Location</th>
+   		 <th style="text-align:center">Last Date</th>
+   		 <th style="text-align:center" width="30%">Job Description</th>
  		<tr>
  		</table>
         

@@ -203,9 +203,9 @@ $(function() {
     });
 });
 </script>	
-<form id="create_user" method="post" enctype='application/json'>
+<form id="create_user" method="post" enctype="multipart/form-data">
 	<div align='center'>
-	<h1 align=center style="color:white;font-family:courier;font-size:400%;">WELCOME TO FILE VAULT</h1>	
+	<h1 align=center style="color:black;font-family:courier;font-size:400%;">WELCOME To E-Connect</h1>	
     <div class="container">
     <div class="row">
       <h1 style="text-align:center;color:green">Sign Up Here!!</h1>
@@ -217,10 +217,10 @@ $(function() {
   			<input type="password" name="password" id="password"  placeholder="Password" onkeyup='check();' required>
   			<input type="password" name="confirm_password" id="confirm_password"  placeholder="Confirm Password" onkeyup='check();' required>
   			<span id='message'></span>
-  			<input type=education name="education" id="education" placeholder="Higher Education" required>
-  			<input type="industryExperience" name="industryExperience" id="industryExperience" placeholder="Industry Experience" required>
-  			<input type="githubLink" name="githubLink" id="githubLink" placeholder="GitHub Link" required>
-  			<input type="file" name="file" id="file" required>
+  			<input type=text name="education" id="education" placeholder="Higher Education" required>
+  			<input type="text" name="industryExperience" id="industryExperience" placeholder="Industry Experience" required>
+  			<input type="text" name="githubLink" id="githubLink" placeholder="GitHub Link" required>
+  			Upload Resume:<input type="file" name="file" id="file" required>
         <input type="submit" value="Submit">
         <input type="button" value="Back to login page" onclick="window.location.href = 'Index.html';">
       </div>

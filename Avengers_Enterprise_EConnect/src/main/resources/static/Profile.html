@@ -42,7 +42,15 @@ $(document).ready(function (){
 	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var lastName = document.cookie.replace(/(?:(?:^|.*;\s*)lastName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var emailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var role = document.cookie.replace(/(?:(?:^|.*;\s*)role\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	document.getElementById("displayUser").innerHTML='Welcome ' + firstName +" "+lastName;
+	if(role == 'admin')
+	{document.getElementById("admin").style.display = "block";
+	document.getElementById("admin1").style.display = "block";}
+	else{
+		document.getElementById("admin").style.display = "none";
+		document.getElementById("admin1").style.display = "none";
+	}
 	$.ajax({
 		type: 'GET',
 		url: '/getUserProfileDetails',
@@ -53,13 +61,13 @@ $(document).ready(function (){
 			//alert(jsonResponse);
 			var display_data = "";
 			
-				display_data += '<p>First Name: ' + jsonData.firstName + '<p>';
-				display_data += '<p>Last Name: ' + jsonData.lastName + '</p>';
-				display_data += '<p>Email ID: ' + jsonData.emailId + '</p>';
-				display_data += '<p>Education: ' + jsonData.education + '</p>';
-				display_data += '<p>Industry Experience: ' + jsonData.industryExperience + '</p>';
-				display_data += '<p>GitHub Link: ' + jsonData.githubLink + '</p>';	
-				display_data += '<p>Resume: ' + jsonData.githubLink + '</p>';
+				display_data += '<p style="color:blue;">First Name: ' + jsonData.firstName + '<p>';
+				display_data += '<p style="color:blue;">Last Name: ' + jsonData.lastName + '</p>';
+				display_data += '<p style="color:blue;">Email ID: ' + jsonData.emailId + '</p>';
+				display_data += '<p style="color:blue;">Education: ' + jsonData.education + '</p>';
+				display_data += '<p style="color:blue;">Industry Experience: ' + jsonData.industryExperience + '</p>';
+				display_data += '<p style="color:blue;">GitHub Link: ' + jsonData.githubLink + '</p>';	
+				display_data += '<p style="color:blue;">Resume: ' + jsonData.githubLink + '</p>';
 			
 			$('#t01').append(display_data);
 		},
@@ -95,7 +103,7 @@ $(document).ready(function (){
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h3>E-Connect Portal</h3>
+      <h3 style="color:blue;">E-Connect Portal</h3>
       <div align='left'><span style="font-size:150%" id='displayUser'></span></div><br>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="Home.html">Dashboard</a></li>

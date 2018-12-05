@@ -14,7 +14,14 @@ public class GetJobsResponse implements Serializable {
 	private String location;
 	private String dueDate;
 	private String jobDescription;
+	private String alreadyApplied;
 	
+	public String getAlreadyApplied() {
+		return alreadyApplied;
+	}
+	public void setAlreadyApplied(String alreadyApplied) {
+		this.alreadyApplied = alreadyApplied;
+	}
 	public Integer getId() {
 		return id;
 	}

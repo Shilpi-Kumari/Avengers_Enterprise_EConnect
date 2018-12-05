@@ -23,12 +23,14 @@ public interface EConnectService
     
     Map<String, String> adminJobsPost(JobsPostRequest jobsPostRequest);
     
-    List<GetJobsResponse> getJobsList(String jobType, String jobTitle);
+    List<GetJobsResponse> getJobsList(String jobType, String jobTitle, String emailId);
     
     Map<String, String> customerAppliedJobs(String userEmailId, String jobId);
     
     List<GetCustomerAppliedJobs> getCustomerAppliedJobsList();
     
     GetUserProfileResponse getUserProfileDetails(String emailId);
+    
+    String getSocialEmailId(String accessToken);
     
 }

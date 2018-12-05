@@ -26,14 +26,21 @@
 
 <script>
 
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[#&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 function logout(){
-	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	
 	document.cookie = "firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 	document.cookie = "lastName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 	document.cookie = "emailId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-	//document.cookie = "account_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-	//document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	
 };
 
 
@@ -56,17 +63,45 @@ function applyJob(jobId){
 
 $(document).ready(function () {
 	//$('#spinner').hide();
+	//var number = getUrlVars()["x"];
+	var accessToken = getUrlVars()["access_token"];
+	//alert(accessToken);
+	
 	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var lastName = document.cookie.replace(/(?:(?:^|.*;\s*)lastName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var emailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var role = document.cookie.replace(/(?:(?:^|.*;\s*)role\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	var socialEmailId = document.cookie.replace(/(?:(?:^|.*;\s*)socialEmailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+	
+	if(role == 'admin' | role =='user')
+	{
 	document.getElementById("displayUser").innerHTML='Welcome ' + firstName +" "+lastName;
-	if(emailId == 'admin@econnect.com')
+	}
+	else{
+		document.getElementById("displayUser").innerHTML='Welcome ' + socialEmailId;
+	}
+	
+	if(role == 'admin')
 	{document.getElementById("admin").style.display = "block";
 	document.getElementById("admin1").style.display = "block";}
 	else{
 		document.getElementById("admin").style.display = "none";
 		document.getElementById("admin1").style.display = "none";
 	}
+	
+	$.ajax({
+        url: '/getSocialEmailId',
+        type: 'GET',
+        data: { accessToken: accessToken },
+        success :function(data) {
+        	document.cookie="socialEmailId="+data;
+            //alert(data);            	  
+       },
+       error: function(error){
+      	  var errorjson = JSON.stringify(error); 
+            //alert(errorjson);            	  
+        }
+    });
 	
 });
 
@@ -80,7 +115,7 @@ $(function() {
     	$.ajax({
     		type: 'GET',
     		url: '/getJobsList',
-    		data: { jobType: jobType, jobTitle: jobTitle },
+    		data: { jobType: jobType, jobTitle: jobTitle,emailId: emailId },
     		success: function (data) {
     			var display_data = "";
     			var jsonResponse = JSON.stringify(data);
@@ -90,12 +125,18 @@ $(function() {
     				{document.getElementById('error').innerHTML="No Jobs Found...!!!";}
     			else{
     			for (var i = 0; i < jsonData.length; i++) {
+    				//alert(jsonData[i].alreadyApplied);
     				display_data += '<div class="col-sm-9">';
     				display_data += '<div class="well">';
     				display_data += '<p>Organization Name: ' + jsonData[i].organization + '<p>';
     				display_data += '<p>Last Date To Apply: ' + jsonData[i].dueDate + '</p>';
     				display_data += '<p>Job Description: ' + jsonData[i].jobDescription + '</p>';
+    				if(jsonData[i].alreadyApplied == "true"){
+    				display_data += '<span style="color:green;">Already Applied</span>';
+    				}
+    				else{
     				display_data += '<button onClick=applyJob('+jsonData[i].id+')>Apply</button>';
+    				}
     				display_data += '</div>';
     				display_data += '</div>';
     			}
@@ -134,7 +175,7 @@ $(function() {
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h3>E-Connect Portal</h3>
+      <h3 style="color:blue;">E-Connect Portal</h3>
       <div align='left'><span style="font-size:150%" id='displayUser'></span></div><br>
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="Home.html">Dashboard</a></li>
@@ -164,7 +205,6 @@ $(function() {
  			    <option value="Backend Developer">Backend Developer</option>
 				<option value="Software Engineer">Software Engineer</option>
 		    </select><br><br>
-  			<span id='message'></span>
 	 		<p id='error' style="color:green;"></p>
   			<input type="submit" value="Submit">
   			
@@ -173,7 +213,6 @@ $(function() {
 	
       </div>
       <div class="row" id="t01">
-        
       </div>
    
     </div>

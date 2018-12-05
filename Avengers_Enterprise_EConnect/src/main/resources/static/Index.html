@@ -72,6 +72,10 @@ input:hover,
   color: white;
 }
 
+.twitter {
+  background-color: #55ACEE;
+  color: white;
+}
 /* style the submit button */
 input[type=submit] {
   background-color: #4CAF50;
@@ -215,6 +219,7 @@ $(function() {
                 	document.cookie="firstName="+data.firstname;
                 	document.cookie="lastName="+data.lastname;
                   	document.cookie="emailId="+data.emailid;
+                  	document.cookie="role="+data.role;
                   	window.location.href = "Home.html";
                 }
                 else{
@@ -347,18 +352,22 @@ function getProfileData() {
       </div>
 
       <div class="col">
-      <br>
-       <div class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();"></div>
-       <br><br>
-       <div class="g-signin2" onclick="clickGoogleLogin()" data-onsuccess="onSignIn"></div>
-       <br>
-       <div><script type="in/Login"></script></div>
+       <a href="#" class="fb btn">
+          <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+         </a>
+       <a class="google btn" href="https://dev-485075.oktapreview.com/oauth2/v1/authorize?idp=0oahzut1y2QwictKt0h7&client_id=0oahyyg3mwrQNpicE0h7&response_type=token&response_mode=fragment&scope=openid&redirect_uri=http://localhost:8080/Home.html&state=false&nonce=YsG76jo"><i class="fa fa-google fa-fw">
+          </i> Login with Google</a>
+       <a class="twitter btn" href="https://dev-894788.oktapreview.com/oauth2/v1/authorize?idp=0oahzhwt99GPJzMZa0h7&client_id=0oahyyapdqRSRtoN80h7&response_type=token&response_mode=fragment&scope=openid&
+		redirect_uri=http://localhost:8080/Home.html&state=false&nonce=YsG76jo">
+		<i class="fa fa-linkedin-square">Login With LinkedIn</i></a>
       </div>
+      
 	<p id='error' style="color:red;"></p>
       <div class="col">
         <input type="text" name="emailId" id="emailId" placeholder="Email Id" required>
         <input type="password" name="password" id="password" placeholder="Password" required>
         <input type="submit" value="Login">
+        <p><a href="https://dev-485075.oktapreview.com/oauth2/v1/authorize?idp=0oahzvo083bmLeKCC0h7&client_id=0oahz0zhh0XbHoNMy0h7&response_type=token&response_mode=fragment&scope=openid&redirect_uri=https://localhost:8080/Home.html&state=false&nonce=YsG76jo">Login With Google</a></p>
       </div>
       
     </div>

@@ -7,6 +7,7 @@ import java.util.Map;
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
 import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
+import sjsu.cloud.cohort10.dto.JobApplied;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.dto.UserSignInRequest;
@@ -26,5 +27,7 @@ public interface EConnectDAO {
 	List<GetCustomerAppliedJobs> getCustomerAppliedJobsList();
 	
 	GetUserProfileResponse getUserProfileDetails(String emailId);
+	
+	List<JobApplied> getJobsAppliedList();
 	
 }

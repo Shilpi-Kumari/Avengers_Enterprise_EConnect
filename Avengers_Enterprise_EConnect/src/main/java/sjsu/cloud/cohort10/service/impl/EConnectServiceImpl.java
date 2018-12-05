@@ -22,11 +22,14 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 import sjsu.cloud.cohort10.dao.EConnectDAO;
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
 import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
+import sjsu.cloud.cohort10.dto.JobApplied;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.dto.UserSignInRequest;
@@ -51,6 +54,15 @@ public class EConnectServiceImpl implements EConnectService
     @Autowired
     EConnectDAO econnectDAO;
     
+    @Override
+    public String getSocialEmailId(String accessToken) {
+          
+           DecodedJWT jwt = JWT.decode(accessToken);
+           String emailId = jwt.getClaim("sub").asString();
+          
+           return emailId;
+    }
+    
     
     @Override
 	public Map<String,String> userLogin(UserLoginRequest userLoginRequest){
@@ -69,11 +81,22 @@ public class EConnectServiceImpl implements EConnectService
 	}
 
 	@Override
-	public List<GetJobsResponse> getJobsList(String jobType, String jobTitle) {
+	public List<GetJobsResponse> getJobsList(String jobType, String jobTitle, String emailId) {
 		
 		//logic to get the jobs from DB
-		List<GetJobsResponse> getJobsList = econnectDAO.getJobsList(jobType, jobTitle);
-		return getJobsList;
+		List<GetJobsResponse> getAvailableJobsList = econnectDAO.getJobsList(jobType, jobTitle);
+		
+		//logic to get the list of jobs already applied by the customer
+		List<JobApplied> getJobsAppliedList = econnectDAO.getJobsAppliedList();
+		
+		for(GetJobsResponse availableJobs : getAvailableJobsList) {
+			for (JobApplied userAppliedJob : getJobsAppliedList) {
+				if (availableJobs.getId() == Integer.valueOf(userAppliedJob.getId()) && emailId.equalsIgnoreCase(userAppliedJob.getCustomerEmailId())) {
+					availableJobs.setAlreadyApplied("true");
+				}
+			}
+		}
+		return getAvailableJobsList;
 	}
 
 	@Override

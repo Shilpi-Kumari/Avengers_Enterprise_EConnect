@@ -24,6 +24,20 @@ public class EConnectController {
 
     @Autowired
     private EConnectService econnectService;
+    
+  //send email to friend for referral scenario
+    @RequestMapping(value = "/getSocialEmailId", method = RequestMethod.GET, produces = "application/javascript")
+       @ResponseBody
+       public String getSocialEmailId(@RequestParam String accessToken) {
+       String emailId = null;
+       try {
+                      emailId = this.econnectService.getSocialEmailId(accessToken);
+              } catch (Exception e) {
+                      e.printStackTrace();
+              }
+              return emailId;
+       }
+
 
     //User sign up request mapping from CUSTOMER_INFO table
     @RequestMapping(value = "/userSignUp", method = RequestMethod.POST, produces = "application/json")
@@ -64,6 +78,7 @@ public class EConnectController {
 	@RequestMapping(value = "/adminJobsPost", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Map<String, String> adminJobsPost(@RequestBody JobsPostRequest jobsPostRequest) {
+		//System.out.println(jobsPostRequest.toString());
 		Map<String, String> responseMap = null;
 		try {
 			responseMap = this.econnectService.adminJobsPost(jobsPostRequest);
@@ -77,11 +92,11 @@ public class EConnectController {
 	@RequestMapping(value = "/getJobsList", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<GetJobsResponse> getJobsList(@RequestParam String jobType, 
-			@RequestParam String jobTitle) {
+			@RequestParam String jobTitle,@RequestParam String emailId) {
     	List<GetJobsResponse> getJobsResponseList = null;
 		try {
 			
-			getJobsResponseList = this.econnectService.getJobsList(jobType,jobTitle);
+			getJobsResponseList = this.econnectService.getJobsList(jobType,jobTitle,emailId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -99,6 +114,7 @@ public class EConnectController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		//System.out.println(responseMap);
 		return responseMap;
 	}
 	

@@ -9,15 +9,14 @@ public class UserDetailsDTO implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String emailId;
-
-	public UserDetailsDTO() {
+	private String role;
+	
+	public String getRole() {
+		return role;
 	}
 
-	public UserDetailsDTO(String firstName, String lastName, String emailId) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getFirstName() {

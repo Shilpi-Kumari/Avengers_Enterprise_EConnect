@@ -1,9 +1,6 @@
 package sjsu.cloud.cohort10.dto;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-
-import javax.persistence.Column;
 
 public class JobsPostRequest implements Serializable {
 
@@ -15,7 +12,15 @@ public class JobsPostRequest implements Serializable {
 	private String location;
 	private String dueDate;
 	private String jobDescription;
+	private String recruiterEmail;
 	
+	
+	public String getRecruiterEmail() {
+		return recruiterEmail;
+	}
+	public void setRecruiterEmail(String recruiterEmail) {
+		this.recruiterEmail = recruiterEmail;
+	}
 	public String getJobType() {
 		return jobType;
 	}

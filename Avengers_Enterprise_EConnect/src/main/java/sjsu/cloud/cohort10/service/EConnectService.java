@@ -25,7 +25,9 @@ public interface EConnectService
     
     List<GetJobsResponse> getJobsList(String jobType, String jobTitle, String emailId);
     
-    Map<String, String> customerAppliedJobs(String userEmailId, String jobId);
+    Map<String, String> customerAppliedJobs(MultipartFile file, String firstName, String lastName,
+			String education, String experience, String recruiterEmailId, String userEmailId, String jobId, 
+			boolean enableAccess);
     
     List<GetCustomerAppliedJobs> getCustomerAppliedJobsList();
     

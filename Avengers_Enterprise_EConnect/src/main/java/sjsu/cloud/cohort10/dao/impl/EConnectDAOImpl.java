@@ -83,12 +83,12 @@ public class EConnectDAOImpl implements EConnectDAO{
 		
 		try {
 			String sql = "INSERT INTO JOBS (JobType, JobTitle, Organization, "
-					+ "Location, DueDate, JobDescription) "
-					+ "VALUES (?, ?, ?, ?, ?, ?)";
+					+ "Location, DueDate, JobDescription, RecruiterEmail) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			jdbcTemplate.update(sql, jobsPostRequest.getJobType(), jobsPostRequest.getJobTitle(),
 					jobsPostRequest.getOrganization(), jobsPostRequest.getOrganization(), jobsPostRequest.getDueDate(),
-					jobsPostRequest.getJobDescription());
+					jobsPostRequest.getJobDescription(), jobsPostRequest.getRecruiterEmail());
 			
 			outputMap.put("status", "true");
 			
@@ -120,6 +120,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 			getJobs.setLocation((String)obj.get("Location"));
 			getJobs.setDueDate((String)obj.get("DueDate"));
 			getJobs.setJobDescription((String)obj.get("JobDescription"));
+			getJobs.setRecruiterEmailId((String)obj.get("RecruiterEmail"));
 			
 			getJobsList.add(getJobs);
 		}

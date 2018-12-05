@@ -33,6 +33,7 @@ import sjsu.cloud.cohort10.dto.JobApplied;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.dto.UserSignInRequest;
+import sjsu.cloud.cohort10.helper.AWSSimpleEmailServiceHelper;
 import sjsu.cloud.cohort10.service.EConnectService;
 
 @Component
@@ -53,6 +54,9 @@ public class EConnectServiceImpl implements EConnectService
     
     @Autowired
     EConnectDAO econnectDAO;
+    
+    @Autowired
+    AWSSimpleEmailServiceHelper sesHelper;
     
     @Override
     public String getSocialEmailId(String accessToken) {
@@ -100,10 +104,45 @@ public class EConnectServiceImpl implements EConnectService
 	}
 
 	@Override
-	public Map<String, String> customerAppliedJobs(String userEmailId, String jobId) {
+	public Map<String, String> customerAppliedJobs(MultipartFile multipartFile, String firstName, String lastName,
+			String education, String experience, String recruiterEmailId, String userEmailId, String jobId,
+			boolean enablePublicReadAccess) {
 
-		//logic to post the jobs in DB by the admin
-		Map<String, String> outputMap = econnectDAO.customerAppliedJobs(userEmailId, jobId);
+		//logic to upload the resume to s3
+		String uploadFileName = multipartFile.getOriginalFilename();
+		
+		 Map<String, String> outputMap = new HashMap<>();
+		 try {
+	            File file = new File(uploadFileName);
+	            FileOutputStream fos = new FileOutputStream(file);
+	            fos.write(multipartFile.getBytes());
+	            fos.close();
+	            
+	            String key = userEmailId + "/" + uploadFileName;
+
+	            PutObjectRequest putObjectRequest = new PutObjectRequest(this.awsS3AudioBucket, key, file);
+
+	            if (enablePublicReadAccess) {
+	                putObjectRequest.withCannedAcl(CannedAccessControlList.PublicRead);
+	            }
+	            this.amazonS3.putObject(putObjectRequest);
+	            
+	            //logic to get the document from cloud front url
+	            String cloudFrontUrl = "";
+	            
+	            //logic to send the email to recruiter of the job applied by user with the details using AWS SES
+	            sesHelper.recruiterEmailMessage(firstName, lastName, userEmailId, education,
+	            		experience, cloudFrontUrl, recruiterEmailId, jobId);
+	            
+	          //logic to post the jobs in DB by the admin
+	            outputMap = econnectDAO.customerAppliedJobs(userEmailId, jobId);
+	            
+	            file.delete();
+	            
+	        } catch (IOException | AmazonServiceException ex) {
+	            logger.error("error [" + ex.getMessage() + "] occurred while uploading [" + uploadFileName + "] ");
+	        }
+		 
 		return outputMap;
 	}
 

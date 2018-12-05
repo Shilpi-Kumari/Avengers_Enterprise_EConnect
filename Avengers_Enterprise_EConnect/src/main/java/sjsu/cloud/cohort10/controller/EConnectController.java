@@ -106,11 +106,19 @@ public class EConnectController {
 	//logic to insert the customer applied jobs to table JOBS_APPLIED
 	@RequestMapping(value = "/postCustomerAppliedJobs", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public Map<String, String> customerAppliedJobs(@RequestParam String userEmailId, 
-			@RequestParam String jobId) {
+	public Map<String, String> customerAppliedJobs(
+			@RequestParam(value = "file", required = true) MultipartFile file,
+			@RequestParam(value = "firstName", required = true) String firstName,
+			@RequestParam(value = "lastName", required = true) String lastName,
+			@RequestParam(value = "education", required = true) String education,
+			@RequestParam(value = "experience", required = true) String experience,
+			@RequestParam(value = "recruiterEmailId", required = true) String recruiterEmailId,
+			@RequestParam(value = "userEmailId", required = true) String userEmailId,
+			@RequestParam(value = "jobId", required = true) String jobId) {
 		Map<String, String> responseMap = null;
 		try {
-			responseMap = this.econnectService.customerAppliedJobs(userEmailId, jobId);
+			responseMap = this.econnectService.customerAppliedJobs(file, firstName, lastName,
+					education, experience, recruiterEmailId, userEmailId, jobId, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

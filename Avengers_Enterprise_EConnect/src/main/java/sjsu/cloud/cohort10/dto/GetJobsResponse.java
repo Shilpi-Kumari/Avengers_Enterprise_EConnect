@@ -15,7 +15,15 @@ public class GetJobsResponse implements Serializable {
 	private String dueDate;
 	private String jobDescription;
 	private String alreadyApplied;
+	private String recruiterEmailId;
 	
+	
+	public String getRecruiterEmailId() {
+		return recruiterEmailId;
+	}
+	public void setRecruiterEmailId(String recruiterEmailId) {
+		this.recruiterEmailId = recruiterEmailId;
+	}
 	public String getAlreadyApplied() {
 		return alreadyApplied;
 	}

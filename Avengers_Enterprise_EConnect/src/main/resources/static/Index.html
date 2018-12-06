@@ -292,9 +292,9 @@ function facebookLogin() {
 	          success :function(data) {
 	              var json = JSON.stringify(data);
 	              if(data.status=="true"){
-	            	  document.cookie="firstName="+profile.getGivenName();
-		              	document.cookie="lastName="+profile.getFamilyName();
-		          		document.cookie="emailId="+profile.getEmail();
+	            	  document.cookie="firstName="+response.first_name;
+		              	document.cookie="lastName="+response.last_name;
+		          		document.cookie="emailId="+response.email;
 		                document.cookie="role=user";
 	                	window.location.href = "/Home.html";
 	              }

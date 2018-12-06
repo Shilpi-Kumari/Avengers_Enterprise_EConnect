@@ -30,6 +30,7 @@ import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
 import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
 import sjsu.cloud.cohort10.dto.JobApplied;
+import sjsu.cloud.cohort10.dto.JobsCountResponse;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.dto.UserSignInRequest;
@@ -190,6 +191,9 @@ public class EConnectServiceImpl implements EConnectService
             //call the DB class to insert customer info 
             outputMap = econnectDAO.createUser(userSignUpRequest);
             
+            //set the file name to UI purpose
+            outputMap.put("fileName", uploadFileName);
+            
             file.delete();
             
         } catch (IOException | AmazonServiceException ex) {
@@ -204,6 +208,92 @@ public class EConnectServiceImpl implements EConnectService
 		//logic to call the DB to the user profile details
 		GetUserProfileResponse getUserProfileDetails = econnectDAO.getUserProfileDetails(emailId);
 		return getUserProfileDetails;
+	}
+
+
+	@Override
+	public JobsCountResponse getJobsCount() {
+		
+		JobsCountResponse jobCountResponse = new JobsCountResponse();
+		
+		List<GetJobsResponse> getJobsResponseList = econnectDAO.getCompleteJobsList();
+		
+		//Internship UI Developer
+		Integer iu = 0;
+		//Internship Backend developer
+		Integer ib = 0;
+		//Internship software engineer
+		Integer is = 0;
+		//part time ui developer
+		Integer pu = 0;
+		//part time backend developer
+		Integer pb = 0;
+		//part time software engineer
+		Integer ps = 0;
+		//full time ui developer
+		Integer fu = 0;
+		//full time backend developer
+		Integer fb = 0;
+		//full time software engineer
+		Integer fs = 0;
+		
+		for (GetJobsResponse getJobsResponse : getJobsResponseList) {
+			//Internship UI Developer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Internship") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("UI Developer")) {
+				iu++;
+			}
+			//Internship Backend developer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Internship") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("Backend Developer")) {
+				ib++;
+			}
+			//Internship software engineer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Internship") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("Software Engineer")) {
+				is++;
+			}
+			//part time ui developer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Part-Time") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("UI Developer")) {
+				pu++;
+			}
+			//part time backend developer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Part-Time") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("Backend Developer")) {
+				pb++;
+			}
+			//part time software engineer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Part-Time") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("Software Engineer")) {
+				ps++;
+			}
+			//full time ui developer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Full-Time") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("UI Developer")) {
+				fu++;
+			}
+			//full time backend developer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Full-Time") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("Backend Developer")) {
+				fb++;
+			}
+			//full time software engineer
+			if (getJobsResponse.getJobType().equalsIgnoreCase("Full-Time") && 
+					getJobsResponse.getJobTitle().equalsIgnoreCase("Software Engineer")) {
+				fs++;
+			}
+		}
+		jobCountResponse.setIu(iu);
+		jobCountResponse.setIb(ib);
+		jobCountResponse.setIs(is);
+		jobCountResponse.setPu(pu);
+		jobCountResponse.setPb(pb);
+		jobCountResponse.setPs(ps);
+		jobCountResponse.setFu(fu);
+		jobCountResponse.setFb(fb);
+		jobCountResponse.setFs(fs);
+		return jobCountResponse;
 	}
 
 }

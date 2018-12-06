@@ -30,4 +30,6 @@ public interface EConnectDAO {
 	
 	List<JobApplied> getJobsAppliedList();
 	
+	List<GetJobsResponse> getCompleteJobsList();
+	
 }

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
 import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
+import sjsu.cloud.cohort10.dto.JobsCountResponse;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.service.EConnectService;
@@ -152,6 +153,20 @@ public class EConnectController {
 			e.printStackTrace();
 		}
 		return getUserProfileDetails;
+	}
+	
+	//logic to get the count of jobs applied by the job seeker for admin reference
+	@RequestMapping(value = "/getJobsCount", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public JobsCountResponse getJobsCount() {
+		JobsCountResponse jobsCountResponse = null;
+		try {
+			
+			jobsCountResponse = this.econnectService.getJobsCount();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jobsCountResponse;
 	}
 	
 }

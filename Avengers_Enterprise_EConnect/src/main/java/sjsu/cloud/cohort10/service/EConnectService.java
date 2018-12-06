@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sjsu.cloud.cohort10.dto.GetCustomerAppliedJobs;
 import sjsu.cloud.cohort10.dto.GetJobsResponse;
 import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
+import sjsu.cloud.cohort10.dto.JobsCountResponse;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 
@@ -34,5 +35,7 @@ public interface EConnectService
     GetUserProfileResponse getUserProfileDetails(String emailId);
     
     String getSocialEmailId(String accessToken);
+    
+    JobsCountResponse getJobsCount();
     
 }

@@ -211,4 +211,31 @@ public class EConnectDAOImpl implements EConnectDAO{
 		return getJobsAppliedList;
 	}
 
+	@Override
+	public List<GetJobsResponse> getCompleteJobsList() {
+		
+		String sql = "SELECT * FROM JOBS";
+		
+		List<GetJobsResponse> getJobsList = new ArrayList<GetJobsResponse>();
+		
+		List<java.util.Map<String, Object>> result = jdbcTemplate.queryForList(sql);
+		
+		for(java.util.Map<String, Object> obj : result)
+		{
+			GetJobsResponse getJobs = new GetJobsResponse();
+			
+			getJobs.setId((Integer)obj.get("ID"));
+			getJobs.setJobType((String)obj.get("JobType"));
+			getJobs.setJobTitle((String)obj.get("JobTitle"));
+			getJobs.setOrganization((String)obj.get("Organization"));
+			getJobs.setLocation((String)obj.get("Location"));
+			getJobs.setDueDate((String)obj.get("DueDate"));
+			getJobs.setJobDescription((String)obj.get("JobDescription"));
+			getJobs.setRecruiterEmailId((String)obj.get("RecruiterEmail"));
+			
+			getJobsList.add(getJobs);
+		}
+		return getJobsList;
+	}
+
 }

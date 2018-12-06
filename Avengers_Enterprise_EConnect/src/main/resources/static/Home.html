@@ -47,7 +47,7 @@ function startDictation() {
             
             audio.play();
             
-            while(count<5500000000)
+            while(count<4500000000)
             {
                 count++;
             }
@@ -80,25 +80,12 @@ function logout(){
 	document.cookie = "emailId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 	document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 	
+	
 };
 
 
 
-function lyJob(jobId){
-	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-	var userEmailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-	//alert(userEmailId);
-	//alert(jobId);
-	$.ajax({
-        url: '/postCustomerAppliedJobs',
-        type: 'POST',
-        data: { userEmailId: userEmailId, jobId: jobId },
-        success :function(data) {
-        	
-        document.getElementById('error').innerHTML="Applied Successfully...!!!";
-       }
-    });
-};
+
 
 function applyJob(jobId,recruiterEmailId){
 	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");

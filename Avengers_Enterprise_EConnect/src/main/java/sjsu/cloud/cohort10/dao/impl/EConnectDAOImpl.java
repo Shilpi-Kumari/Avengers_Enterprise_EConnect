@@ -244,10 +244,10 @@ public class EConnectDAOImpl implements EConnectDAO{
 		HashMap<String, String> outputMap = new HashMap<>();
 		
 		try {
-			String sql = "INSERT INTO CUSTOMER_INFO (FirstName, LastName, EmailId) "
-					+ "VALUES (?, ?, ?)";
+			String sql = "INSERT INTO CUSTOMER_INFO (FirstName, LastName, EmailId, Role) "
+					+ "VALUES (?, ?, ?, ?)";
 			
-			jdbcTemplate.update(sql, firstName, lastName, emailId);
+			jdbcTemplate.update(sql, firstName, lastName, emailId, "user");
 			
 			outputMap.put("status", "true");
 			

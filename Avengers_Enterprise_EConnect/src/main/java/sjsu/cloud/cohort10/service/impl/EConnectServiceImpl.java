@@ -32,6 +32,7 @@ import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
 import sjsu.cloud.cohort10.dto.JobApplied;
 import sjsu.cloud.cohort10.dto.JobsCountResponse;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
+import sjsu.cloud.cohort10.dto.UserDetailsDTO;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.dto.UserSignInRequest;
 import sjsu.cloud.cohort10.helper.AWSSimpleEmailServiceHelper;
@@ -299,7 +300,17 @@ public class EConnectServiceImpl implements EConnectService
 	@Override
 	public Map<String, String> socialLoginUpdate(String emailId, String firstName, String lastName) {
 		
-		Map<String, String> outputMap = econnectDAO.createSocialLoginUser(emailId, firstName, lastName);
+		UserDetailsDTO userDetails = econnectDAO.getSocialUserDetails(emailId);
+		
+		 Map<String, String> outputMap = new HashMap<>();
+		
+		if (userDetails == null) {
+			outputMap = econnectDAO.createSocialLoginUser(emailId, firstName, lastName);
+		}
+		else {
+			//user already exists
+			outputMap.put("status", "true");
+		}
 		return outputMap;
 	}
 

@@ -259,4 +259,16 @@ public class EConnectDAOImpl implements EConnectDAO{
 		return outputMap;
 	}
 
+	@Override
+	public UserDetailsDTO getSocialUserDetails(String emailId) {
+		
+			String sql = "SELECT * FROM CUSTOMER_INFO WHERE EmailId = ?";
+			
+			UserDetailsDTO userDetailsDTO = (UserDetailsDTO) jdbcTemplate.queryForObject(
+					sql, new Object[] { emailId}, 
+					new BeanPropertyRowMapper(UserDetailsDTO.class));
+			
+		return userDetailsDTO;
+	}
+
 }

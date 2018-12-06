@@ -9,6 +9,7 @@ import sjsu.cloud.cohort10.dto.GetJobsResponse;
 import sjsu.cloud.cohort10.dto.GetUserProfileResponse;
 import sjsu.cloud.cohort10.dto.JobApplied;
 import sjsu.cloud.cohort10.dto.JobsPostRequest;
+import sjsu.cloud.cohort10.dto.UserDetailsDTO;
 import sjsu.cloud.cohort10.dto.UserLoginRequest;
 import sjsu.cloud.cohort10.dto.UserSignInRequest;
 
@@ -33,5 +34,7 @@ public interface EConnectDAO {
 	List<GetJobsResponse> getCompleteJobsList();
 	
 	Map<String, String> createSocialLoginUser(String emailId, String firstName, String lastName);
+	
+	UserDetailsDTO getSocialUserDetails(String emailId);
 	
 }

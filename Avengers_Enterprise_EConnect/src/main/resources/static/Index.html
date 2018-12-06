@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="741734147837-cqn57f76v2bm5j2n0n322o57jlugpgn8.apps.googleusercontent.com">
+<meta name="google-signin-client_id" content="595532319533-kt073h3fqrj6qbn8r34hbr42to94de2u.apps.googleusercontent.com">
 
 <script type="text/javascript" src="//platform.linkedin.com/in.js">
     api_key: 86r9prb5grcsgw
@@ -24,6 +24,7 @@ body {
  <!-- background: url(background.jpeg);-->
     background-repeat: no-repeat;
     background-size: cover;
+    
 }
 
 * {
@@ -223,14 +224,14 @@ $(function() {
                   	window.location.href = "Home.html";
                 }
                 else{
-                	document.getElementById('error').innerHTML="User does not exist";
+                	document.getElementById('error').innerHTML="User/Password is wrong";
                 	document.getElementById('emailId').value="";
                 	document.getElementById('password').value="";
                 }
            },
            error: function(error){
          	  var errorjson = JSON.stringify(error); 
-               alert("Invalid Username/password");            	  
+               //alert("Invalid Username/password");            	  
            }
         });
     });
@@ -265,7 +266,7 @@ function checkLoginState() {
 
 window.fbAsyncInit = function() {
     FB.init({
-      appId      : '558699881248266',
+      appId      : '2148274241870876',
       cookie     : false,  // enable cookies to allow the server to access 
                           // the session
       xfbml      : true,  // parse social plugins on this page
@@ -352,11 +353,9 @@ function getProfileData() {
       </div>
 
       <div class="col">
-       <a href="#" class="fb btn">
-          <i class="fa fa-facebook fa-fw"></i> Login with Facebook
-         </a>
-       <a class="google btn" href="https://dev-485075.oktapreview.com/oauth2/v1/authorize?idp=0oahzut1y2QwictKt0h7&client_id=0oahyyg3mwrQNpicE0h7&response_type=token&response_mode=fragment&scope=openid&redirect_uri=http://localhost:8080/Home.html&state=false&nonce=YsG76jo"><i class="fa fa-google fa-fw">
-          </i> Login with Google</a>
+       <div class="fb-login-button" scope="public_profile,email" onlogin="checkLoginState();"></div>
+       <br><br>
+       <div class="g-signin2" onclick="clickGoogleLogin()" data-onsuccess="onSignIn"></div>
        <a class="twitter btn" href="https://dev-894788.oktapreview.com/oauth2/v1/authorize?idp=0oahzhwt99GPJzMZa0h7&client_id=0oahyyapdqRSRtoN80h7&response_type=token&response_mode=fragment&scope=openid&
 		redirect_uri=http://localhost:8080/Home.html&state=false&nonce=YsG76jo">
 		<i class="fa fa-linkedin-square">Login With LinkedIn</i></a>

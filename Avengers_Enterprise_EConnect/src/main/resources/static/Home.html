@@ -26,6 +26,45 @@
 
 <script>
 
+function startDictation() {
+    
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+        
+        var recognition = new webkitSpeechRecognition();
+       
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        
+        recognition.lang = "en-US";
+        recognition.start();
+        
+        recognition.onresult = function(e) {
+            document.getElementById('transcript').value
+            = e.results[0][0].transcript;
+            recognition.stop();
+            var audio = document.getElementById("myAudio");
+            var count = 0;
+            
+            audio.play();
+            
+            while(count<5500000000)
+            {
+                count++;
+            }
+
+                    document.getElementById('labnol').submit();
+                    var chatBotText = document.getElementById('transcript').value;
+ 
+            
+        };
+        
+        recognition.onerror = function(e) {
+            recognition.stop();
+        }
+        
+    }
+}
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[#&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -135,6 +174,7 @@ $(function() {
     			if(jsonData.length == 0)
     				{document.getElementById('error').innerHTML="No Jobs Found...!!!";}
     			else{
+    				document.getElementById('error').innerHTML="";
     			for (var i = 0; i < jsonData.length; i++) {
     				//alert(jsonData[i].alreadyApplied);
     				display_data += '<div class="col-sm-9">';
@@ -210,7 +250,7 @@ $(function() {
   				<option value="">Select Job Type</option>
  				<option value="Internship">Internship</option>
  			    <option value="Part-Time">Part-Time</option>
-				<option value="Full-Type">Full-Type</option>
+				<option value="Full-Type">Full-Time</option>
 		    </select><br><br>
 		    Job Title: <select id="JobTitle" name="JobTitle">
   				<option value="">Select Job Title</option>
@@ -218,12 +258,24 @@ $(function() {
  			    <option value="Backend Developer">Backend Developer</option>
 				<option value="Software Engineer">Software Engineer</option>
 		    </select><br><br>
-	 		<p id='error' style="color:green;"></p>
-  			<input type="submit" value="Submit">
+	 		
+  			<input type="submit" value="Submit"><br><br>
   			
 	</form>
 
+<form id="labnol" method="get" action="https://www.google.com/search" target="_blank">
+    <div class="speech">
+        Google Search:<input type="text" name="q" id="transcript" placeholder="Speak" />
+        <img onclick="startDictation()" src="cHidSVu.gif" />
+    </div>
+	</form>
+<audio id="myAudio">
+    <source src="result.mp3" type="audio/mp3">
+        <source src="result.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+	</audio>	
 	
+	<p id='error' style="color:green;"></p>
       </div>
       <div class="row" id="t01">
       </div>

@@ -28,12 +28,14 @@
       google.charts.load('current', {'packages':['bar']});
       google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+      function drawChart(jsonData) {
+    	 
+    	  
         var data = google.visualization.arrayToDataTable([
           ['Type of Jobs', 'UI Developer', 'Backend Developer', 'Software Engineer'],
-          ['Internship', 100, 40, 20],
-          ['Part Time Jobs', 117, 46, 25],
-          ['Full Time Jobs', 66, 112, 30],
+          ['Internship', jsonData.iu, jsonData.ib, jsonData.is],
+          ['Part Time Jobs', jsonData.pu, jsonData.pb, jsonData.ps],
+          ['Full Time Jobs', jsonData.fu, jsonData.fb, jsonData.fs],
       ]);
 
         var options = {
@@ -75,6 +77,22 @@ $(document).ready(function (){
 		document.getElementById("admin").style.display = "none";
 		document.getElementById("admin1").style.display = "none";
 	}
+	
+	$.ajax({
+        url: '/getJobsCount',
+        type: 'GET',
+        success :function(data) {
+        	var jsonResponse = JSON.stringify(data);
+			var jsonData = JSON.parse(jsonResponse);
+			//alert(jsonResponse);
+			drawChart(jsonData);
+			
+       },
+       error: function(error){
+      	  var errorjson = JSON.stringify(error); 
+            //alert(errorjson);            	  
+        }
+    });
 });
 </script>
 

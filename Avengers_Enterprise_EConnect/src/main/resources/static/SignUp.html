@@ -166,6 +166,12 @@ var check = function() {
 	    document.getElementById('message').innerHTML = 'not matching';
 	  }
 	}
+	
+var uncheck = function() {
+	  
+	    document.getElementById('message').innerHTML = "";
+	  
+	}
 
 $(function() {
     $("#create_user").submit(function(e) {
@@ -190,6 +196,10 @@ $(function() {
                 	document.getElementById('lastName').value="";
                 	document.getElementById('emailId').value="";
                 	document.getElementById('password').value="";
+                	document.getElementById('confirm_password').value="";
+                	document.getElementById('education').value="";
+                	document.getElementById('industryExperience').value="";
+                	document.getElementById('githubLink').value=""
                 	//alert("Sign Up is Successfull..!!");
           		 	//window.location.href = "Index.html";
                 }
@@ -217,7 +227,7 @@ $(function() {
   			<input type="password" name="password" id="password"  placeholder="Password" onkeyup='check();' required>
   			<input type="password" name="confirm_password" id="confirm_password"  placeholder="Confirm Password" onkeyup='check();' required>
   			<span id='message'></span>
-  			<input type=text name="education" id="education" placeholder="Higher Education" required>
+  			<input type=text name="education" id="education" placeholder="Higher Education" onkeyup='uncheck();'required>
   			<input type="text" name="industryExperience" id="industryExperience" placeholder="Industry Experience" required>
   			<input type="text" name="githubLink" id="githubLink" placeholder="GitHub Link" required>
   			Upload Resume:<input type="file" name="file" id="file" required>

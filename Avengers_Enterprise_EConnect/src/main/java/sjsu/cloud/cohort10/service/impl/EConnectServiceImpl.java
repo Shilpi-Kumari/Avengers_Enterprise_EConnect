@@ -300,16 +300,12 @@ public class EConnectServiceImpl implements EConnectService
 	@Override
 	public Map<String, String> socialLoginUpdate(String emailId, String firstName, String lastName) {
 		
-		UserDetailsDTO userDetails = econnectDAO.getSocialUserDetails(emailId);
+		Map<String, String> outputMap = new HashMap<>();
 		
-		 Map<String, String> outputMap = new HashMap<>();
+		outputMap = econnectDAO.getSocialUserDetails(emailId);
 		
-		if (userDetails == null) {
+		if (outputMap.get("dbrecord").equalsIgnoreCase("error") || outputMap.get("emailid").equals(null)) {
 			outputMap = econnectDAO.createSocialLoginUser(emailId, firstName, lastName);
-		}
-		else {
-			//user already exists
-			outputMap.put("status", "true");
 		}
 		return outputMap;
 	}

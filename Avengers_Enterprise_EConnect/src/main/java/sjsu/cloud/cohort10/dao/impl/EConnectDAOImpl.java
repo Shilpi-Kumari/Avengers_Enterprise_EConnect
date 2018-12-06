@@ -260,15 +260,28 @@ public class EConnectDAOImpl implements EConnectDAO{
 	}
 
 	@Override
-	public UserDetailsDTO getSocialUserDetails(String emailId) {
+	public Map<String, String> getSocialUserDetails(String emailId) {
 		
+		HashMap<String, String> outputMap = new HashMap<>();
+		try {
 			String sql = "SELECT * FROM CUSTOMER_INFO WHERE EmailId = ?";
 			
 			UserDetailsDTO userDetailsDTO = (UserDetailsDTO) jdbcTemplate.queryForObject(
 					sql, new Object[] { emailId}, 
 					new BeanPropertyRowMapper(UserDetailsDTO.class));
 			
-		return userDetailsDTO;
+			outputMap.put("status", "true");
+			outputMap.put("dbrecord", "success");
+			outputMap .put("emailid", userDetailsDTO.getEmailId());
+			
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+			outputMap.put("status", "false");
+			outputMap.put("dbrecord", "error");
+			outputMap .put("emailid", null);
+		}
+		return outputMap;
 	}
 
 }

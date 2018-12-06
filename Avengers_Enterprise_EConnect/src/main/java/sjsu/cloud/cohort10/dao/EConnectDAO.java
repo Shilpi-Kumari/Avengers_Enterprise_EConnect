@@ -35,6 +35,6 @@ public interface EConnectDAO {
 	
 	Map<String, String> createSocialLoginUser(String emailId, String firstName, String lastName);
 	
-	UserDetailsDTO getSocialUserDetails(String emailId);
+	Map<String, String> getSocialUserDetails(String emailId);
 	
 }

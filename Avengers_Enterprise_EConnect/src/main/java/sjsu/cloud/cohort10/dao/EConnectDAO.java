@@ -32,4 +32,6 @@ public interface EConnectDAO {
 	
 	List<GetJobsResponse> getCompleteJobsList();
 	
+	Map<String, String> createSocialLoginUser(String emailId, String firstName, String lastName);
+	
 }

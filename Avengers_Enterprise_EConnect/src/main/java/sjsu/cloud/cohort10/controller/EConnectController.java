@@ -169,4 +169,17 @@ public class EConnectController {
 		return jobsCountResponse;
 	}
 	
+	//Social login details update in DB
+    @RequestMapping(value = "/socialLoginUpdate", method = RequestMethod.POST, produces = "application/json")
+   	@ResponseBody
+   	public Map<String, String> socialLoginUpdate(@RequestParam String emailId,
+   			@RequestParam String firstName, @RequestParam String lastName) {
+    	Map<String, String> responseMap = null;
+   		try {
+   			responseMap = this.econnectService.socialLoginUpdate(emailId, firstName, lastName);
+   		} catch (Exception e) {
+   			e.printStackTrace();
+   		}
+   		return responseMap;
+   	}
 }

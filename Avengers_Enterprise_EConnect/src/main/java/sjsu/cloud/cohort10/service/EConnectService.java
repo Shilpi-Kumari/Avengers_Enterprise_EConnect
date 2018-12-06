@@ -38,4 +38,6 @@ public interface EConnectService
     
     JobsCountResponse getJobsCount();
     
+    Map<String,String> socialLoginUpdate(String emailId, String firstName, String lastName);
+    
 }

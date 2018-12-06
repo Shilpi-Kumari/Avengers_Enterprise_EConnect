@@ -238,4 +238,25 @@ public class EConnectDAOImpl implements EConnectDAO{
 		return getJobsList;
 	}
 
+	@Override
+	public Map<String, String> createSocialLoginUser(String emailId, String firstName, String lastName) {
+		
+		HashMap<String, String> outputMap = new HashMap<>();
+		
+		try {
+			String sql = "INSERT INTO CUSTOMER_INFO (FirstName, LastName, EmailId) "
+					+ "VALUES (?, ?, ?)";
+			
+			jdbcTemplate.update(sql, firstName, lastName, emailId);
+			
+			outputMap.put("status", "true");
+			
+		}catch (Exception e)
+		{
+			e.printStackTrace();
+			outputMap.put("status", "false");
+		}
+		return outputMap;
+	}
+
 }

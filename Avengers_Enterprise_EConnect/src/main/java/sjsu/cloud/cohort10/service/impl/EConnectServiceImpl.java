@@ -296,4 +296,11 @@ public class EConnectServiceImpl implements EConnectService
 		return jobCountResponse;
 	}
 
+	@Override
+	public Map<String, String> socialLoginUpdate(String emailId, String firstName, String lastName) {
+		
+		Map<String, String> outputMap = econnectDAO.createSocialLoginUser(emailId, firstName, lastName);
+		return outputMap;
+	}
+
 }

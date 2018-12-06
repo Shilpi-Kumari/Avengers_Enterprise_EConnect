@@ -177,8 +177,8 @@ function onSignIn(googleUser) {
 	          success :function(data) {
 	              var json = JSON.stringify(data);
 	              if(data.status=="true"){
-	              	document.cookie="firstname="+profile.getGivenName();
-	              	document.cookie="lastname="+data.lprofile.getFamilyName();
+	              	document.cookie="firstName="+profile.getGivenName();
+	              	document.cookie="lastName="+profile.getFamilyName();
 	          		document.cookie="emailId="+profile.getEmail();
 	                document.cookie="role=user"; 
 	                	window.location.href = "/Home.html";
@@ -292,8 +292,8 @@ function facebookLogin() {
 	          success :function(data) {
 	              var json = JSON.stringify(data);
 	              if(data.status=="true"){
-	            	  document.cookie="firstname="+profile.getGivenName();
-		              	document.cookie="lastname="+data.lprofile.getFamilyName();
+	            	  document.cookie="firstName="+profile.getGivenName();
+		              	document.cookie="lastName="+profile.getFamilyName();
 		          		document.cookie="emailId="+profile.getEmail();
 		                document.cookie="role=user";
 	                	window.location.href = "/Home.html";
@@ -318,8 +318,8 @@ function onSuccess(data) {
         success :function(data) {
             var json = JSON.stringify(data);
             if(data.status=="true"){
-            	document.cookie="firstname="+profile.getGivenName();
-              	document.cookie="lastname="+data.lprofile.getFamilyName();
+            	document.cookie="firstName="+profile.getGivenName();
+              	document.cookie="lastName="+profile.getFamilyName();
           		document.cookie="emailId="+profile.getEmail();
                 document.cookie="role=user";
               	window.location.href = "/Home.html";

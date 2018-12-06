@@ -61,11 +61,12 @@ function lyJob(jobId){
     });
 };
 
-function applyJob(jobId,recruiterEmail){
+function applyJob(jobId,recruiterEmailId){
 	//var account_id = document.cookie.replace(/(?:(?:^|.*;\s*)account_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 	var userEmailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-	alert(recruiterEmail);
+	//alert(recruiterEmail);
 	document.cookie="jobId="+jobId;
+	document.cookie="recruiterEmailId="+recruiterEmailId;
 	window.location.href = 'ApplyJob.html';
 	//alert(userEmailId);
 	//alert(jobId);
@@ -130,7 +131,7 @@ $(function() {
     			var display_data = "";
     			var jsonResponse = JSON.stringify(data);
     			var jsonData = JSON.parse(jsonResponse);
-    			alert(jsonResponse);
+    			//alert(jsonResponse);
     			if(jsonData.length == 0)
     				{document.getElementById('error').innerHTML="No Jobs Found...!!!";}
     			else{
@@ -146,7 +147,7 @@ $(function() {
     				}
     				else{
     				//display_data += '<button onClick=applyJob('+jsonData[i].id+')>Apply</button>';
-    				display_data += '<button onClick=applyJob('+jsonData[i].id+','+jsonData[i].recruiterEmail+')>Apply</button>';
+    				display_data += '<button onClick=applyJob("'+ jsonData[i].id +'","'+ jsonData[i].recruiterEmailId +'")>Apply</button>';
     				}
     				display_data += '</div>';
     				display_data += '</div>';

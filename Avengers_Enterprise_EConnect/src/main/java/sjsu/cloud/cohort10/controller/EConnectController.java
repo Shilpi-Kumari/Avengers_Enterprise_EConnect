@@ -111,14 +111,14 @@ public class EConnectController {
 			@RequestParam(value = "firstName", required = true) String firstName,
 			@RequestParam(value = "lastName", required = true) String lastName,
 			@RequestParam(value = "education", required = true) String education,
-			@RequestParam(value = "experience", required = true) String experience,
+			@RequestParam(value = "industryExperience", required = true) String industryExperience,
 			@RequestParam(value = "recruiterEmailId", required = true) String recruiterEmailId,
 			@RequestParam(value = "userEmailId", required = true) String userEmailId,
 			@RequestParam(value = "jobId", required = true) String jobId) {
 		Map<String, String> responseMap = null;
 		try {
 			responseMap = this.econnectService.customerAppliedJobs(file, firstName, lastName,
-					education, experience, recruiterEmailId, userEmailId, jobId, true);
+					education, industryExperience, recruiterEmailId, userEmailId, jobId, true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

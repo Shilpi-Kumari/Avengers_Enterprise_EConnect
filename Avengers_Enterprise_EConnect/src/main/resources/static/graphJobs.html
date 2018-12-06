@@ -30,12 +30,10 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Username', 'Internship', 'Part Time Jobs', 'Full Time Jobs'],
-          ['Shilpi', 100, 40, 20],
-          ['Poorva', 117, 46, 25],
-          ['Sumanth', 66, 112, 30],
-          ['Harshit', 103, 54, 35],
-          ['Sai Kiran', 103, 54, 35],
+          ['Type of Jobs', 'UI Developer', 'Backend Developer', 'Software Engineer'],
+          ['Internship', 100, 40, 20],
+          ['Part Time Jobs', 117, 46, 25],
+          ['Full Time Jobs', 66, 112, 30],
       ]);
 
         var options = {
@@ -63,45 +61,6 @@ function logout(){
 };
 
 
-
-
-$(function() {
-    $("#post_jobs").submit(function(e) {
-	e.preventDefault();
-	var jobsPostRequest = {
-			"jobType": $('#JobType').val(),
-			"jobTitle": $('#JobTitle').val(),
-			"organization": $('#Organization').val(),
-			"location": $('#Location').val(),
-			"dueDate": $('#DueDate').val(),
-			"jobDescription": $('#JobDescription').val()	
-	}
-	//alert(JSON.stringify(jobsPostRequest));
-		//var jobsPostRequest = new FormData(this);
-		//var jobsPostRequest = $(this).serialize();
-    	//$('#spinner').show();
-        $.ajax({
-            url: "/adminJobsPost",
-            type: 'POST',
-            contentType : 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(jobsPostRequest),
-            success :function(data) {
-            	var json = JSON.stringify(data);
-            	if(data.status=="true")
-            	{document.getElementById('error').innerHTML="Job Posted Successfully...!!!";
-            	document.getElementById("JobType").value = "";
-            	document.getElementById("JobTitle").value = "";
-            	document.getElementById("Organization").value = "";
-            	document.getElementById("Location").value = "";
-            	document.getElementById("DueDate").value = "";
-            	document.getElementById("JobDescription").value = "";
-            	}
-            	//$('#spinner').hide();
-              }
-        });
-    });
-});
 
 $(document).ready(function (){
 	var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -149,9 +108,9 @@ $(document).ready(function (){
       <ul class="nav nav-pills nav-stacked">
         <li><a href="Home.html">Dashboard</a></li>
         <li><a href="Profile.html">Profile</a></li>
-        <li class="active" id='admin'><a href="PostJobs.html">Post Jobs</a></li>
+        <li id='admin'><a href="PostJobs.html">Post Jobs</a></li>
         <li id='admin1'><a href="AppliedJobs.html">Applied Jobs</a></li>
-        <li id='admin1'><a href="graphJobs.html">Graph</a></li>
+        <li class="active" id='admin1'><a href="graphJobs.html">Graph</a></li>
         <li><a href=index.html onClick=logout()>
           <span class="glyphicon glyphicon-log-out"></span> Log out
 	 </a></li>

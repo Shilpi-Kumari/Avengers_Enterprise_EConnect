@@ -22,7 +22,7 @@ public class AWSSimpleEmailServiceHelper {
 			String education, String experience, String cloudFrontUrl, String recruiterEmailId, String jobId)  {
 		
 
-		String FROM = "sumanthravipatirr@gmail.com";
+		String FROM = "E-ConnectPortal@www.shilpisingh.online";
 
 		String TO = recruiterEmailId;
 		

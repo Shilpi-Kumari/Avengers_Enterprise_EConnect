@@ -38,68 +38,33 @@ function logout(){
 
 
 
-$(function() {
-    $("#post_jobs").submit(function(e) {
-	e.preventDefault();
-	var jobsPostRequest = {
-			"jobType": $('#JobType').val(),
-			"jobTitle": $('#JobTitle').val(),
-			"organization": $('#Organization').val(),
-			"location": $('#Location').val(),
-			"dueDate": $('#DueDate').val(),
-			"jobDescription": $('#JobDescription').val()	
-	}
-	//alert(JSON.stringify(jobsPostRequest));
-		//var jobsPostRequest = new FormData(this);
-		//var jobsPostRequest = $(this).serialize();
-    	//$('#spinner').show();
-        $.ajax({
-            url: "/adminJobsPost",
-            type: 'POST',
-            contentType : 'application/json; charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify(jobsPostRequest),
-            success :function(data) {
-            	var json = JSON.stringify(data);
-            	if(data.status=="true")
-            	{document.getElementById('error').innerHTML="Job Posted Successfully...!!!";
-            	document.getElementById("JobType").value = "";
-            	document.getElementById("JobTitle").value = "";
-            	document.getElementById("Organization").value = "";
-            	document.getElementById("Location").value = "";
-            	document.getElementById("DueDate").value = "";
-            	document.getElementById("JobDescription").value = "";
-            	}
-            	//$('#spinner').hide();
-              }
-        });
-    });
-});
+
 $(function() {
     $("#apply_jobs").submit(function(e) {
     	e.preventDefault();
 		
-		//var formData = new FormData(this);
+		var formData = new FormData(this);
 		var firstName = document.cookie.replace(/(?:(?:^|.*;\s*)firstName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 		var lastName = document.cookie.replace(/(?:(?:^|.*;\s*)lastName\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 		var userEmailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 		var jobId = document.cookie.replace(/(?:(?:^|.*;\s*)jobId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-		var recruiterEmail = document.cookie.replace(/(?:(?:^|.*;\s*)recruiterEmail\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		var recruiterEmailId = document.cookie.replace(/(?:(?:^|.*;\s*)recruiterEmailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 		var education=document.getElementById('education').value;
 		var industryExperience=document.getElementById('industryExperience').value;
+		alert(education);
 		
 		var file = document.getElementById('file').value;
 		if (file.lastIndexOf('\\') >= 0)
 			file = file.substr(file.lastIndexOf('\\') + 1);
 		
-		var formData = new FormData($('#the-form')[0]);
-		formData.append("firstName", firstName));
-		formData.append("lastName", lastName);
+		//var formData = new FormData($('#apply_jobs')[0]);
+		//formData.append("firstName", firstName);
+		//formData.append("lastName", lastName);
 		formData.append("userEmailId", userEmailId);
-		formData.append("recruiterEmail", recruiterEmail);
-		formData.append("education", education);
+		formData.append("recruiterEmailId", recruiterEmailId);
+		//formData.append("education", education);
 		formData.append("jobId", jobId);
-		formData.append("industryExperience", industryExperience);
+		//formData.append("industryExperience", industryExperience);
 		//formData.append("fileDescription", descr);
 		
         $.ajax({
@@ -115,10 +80,10 @@ $(function() {
                 //alert(json);
                 if(data.status=="true"){
                 	document.getElementById('error').innerHTML="You have applied for this job successfully.Recruiter has been notified.";
-                	document.getElementById('firstName').value="";
-                	document.getElementById('lastName').value="";
-                	document.getElementById('emailId').value="";
-                	document.getElementById('password').value="";
+                	//document.getElementById('firstName').value="";
+                	//document.getElementById('lastName').value="";
+                	//document.getElementById('emailId').value="";
+                	//document.getElementById('password').value="";
                 	//alert("Sign Up is Successfull..!!");
           		 	//window.location.href = "Index.html";
                 }
@@ -193,6 +158,7 @@ $(document).ready(function (){
     <div class="col-sm-9">
       <div class="well">
         <form id="apply_jobs" method="post" enctype="multipart/form-data">
+        	
   			First Name: <input type="text" name="firstName" id="firstName" required><br><br>
   			Last Name: <input type="text" name="lastName" id="lastName" required><br><br>
   			Highest Qualification: <input type=text name="education" id="education"><br><br>

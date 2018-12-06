@@ -128,7 +128,7 @@ public class EConnectServiceImpl implements EConnectService
 	            this.amazonS3.putObject(putObjectRequest);
 	            
 	            //logic to get the document from cloud front url
-	            String cloudFrontUrl = "";
+	            String cloudFrontUrl = "http://d1o2tgjd3ar7cr.cloudfront.net/"+userEmailId+"/"+uploadFileName;
 	            
 	            //logic to send the email to recruiter of the job applied by user with the details using AWS SES
 	            sesHelper.recruiterEmailMessage(firstName, lastName, userEmailId, education,

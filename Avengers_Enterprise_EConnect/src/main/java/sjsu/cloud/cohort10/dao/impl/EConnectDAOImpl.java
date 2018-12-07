@@ -84,7 +84,7 @@ public class EConnectDAOImpl implements EConnectDAO{
 		try {
 			String sql = "INSERT INTO JOBS (JobType, JobTitle, Organization, "
 					+ "Location, DueDate, JobDescription, RecruiterEmail) "
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			
 			jdbcTemplate.update(sql, jobsPostRequest.getJobType(), jobsPostRequest.getJobTitle(),
 					jobsPostRequest.getOrganization(), jobsPostRequest.getOrganization(), jobsPostRequest.getDueDate(),

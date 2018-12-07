@@ -47,7 +47,8 @@ $(function() {
 			"organization": $('#Organization').val(),
 			"location": $('#Location').val(),
 			"dueDate": $('#DueDate').val(),
-			"jobDescription": $('#JobDescription').val()	
+			"jobDescription": $('#JobDescription').val(),
+			"recruiterEmail": $('#recruiterEmail').val()
 	}
 	//alert(JSON.stringify(jobsPostRequest));
 		//var jobsPostRequest = new FormData(this);
@@ -62,7 +63,8 @@ $(function() {
             success :function(data) {
             	var json = JSON.stringify(data);
             	if(data.status=="true")
-            	{document.getElementById('error').innerHTML="Job Posted Successfully...!!!";
+            	{
+            	document.getElementById('error').innerHTML="Job Posted Successfully...!!!";
             	document.getElementById("JobType").value = "";
             	document.getElementById("JobTitle").value = "";
             	document.getElementById("Organization").value = "";
@@ -139,7 +141,7 @@ $(document).ready(function (){
   				<option value="">Select Job Type</option>
  				<option value="Internship">Internship</option>
  			    <option value="Part-Time">Part-Time</option>
-				<option value="Full-Type">Full-Type</option>
+				<option value="Full-Time">Full-Time</option>
 		    </select><br><br>
 		    Job Title: <select id="JobTitle" name="JobTitle">
   				<option value="">Select Job Title</option>
@@ -150,6 +152,7 @@ $(document).ready(function (){
   			Organization: <input type="text" name="Organization" id="Organization" required><br><br>
   			Job Location: <input type="text" name="Location" id="Location" required><br><br>
   			Job Due Date: <input type="date" name="DueDate" id="DueDate" ><br><br>
+  			Recruiter Email: <input type="text" name="recruiterEmail" id="recruiterEmail" ><br><br>
   			Job Description:<br> <textarea rows="7" cols="55" name="JobDescription" id="JobDescription"></textarea>
   			<span id='message'></span>
 	 		<p id='error' style="color:green;"></p>

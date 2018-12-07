@@ -149,6 +149,7 @@ $(function() {
     $("#serach_jobs").submit(function(e) {
     	e.preventDefault();
     	var formData = new FormData(this);
+    	var role = document.cookie.replace(/(?:(?:^|.*;\s*)role\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     	var jobType=document.getElementById('JobType').value;
     	var jobTitle=document.getElementById('JobTitle').value;
     	var emailId = document.cookie.replace(/(?:(?:^|.*;\s*)emailId\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -172,13 +173,15 @@ $(function() {
     				display_data += '<p>Organization Name: ' + jsonData[i].organization + '<p>';
     				display_data += '<p>Last Date To Apply: ' + jsonData[i].dueDate + '</p>';
     				display_data += '<p>Job Description: ' + jsonData[i].jobDescription + '</p>';
+    				if(role != "admin")
+    				{
     				if(jsonData[i].alreadyApplied == "true"){
     				display_data += '<span style="color:green;">Already Applied</span>';
     				}
     				else{
     				//display_data += '<button onClick=applyJob('+jsonData[i].id+')>Apply</button>';
     				display_data += '<button onClick=applyJob("'+ jsonData[i].id +'","'+ jsonData[i].recruiterEmailId +'")>Apply</button>';
-    				}
+    				}}
     				display_data += '</div>';
     				display_data += '</div>';
     			}

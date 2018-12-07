@@ -107,10 +107,12 @@ $(document).ready(function (){
 	document.getElementById("displayUser").innerHTML='Welcome ' + firstName +" "+lastName;
 	if(role == 'admin')
 	{document.getElementById("admin").style.display = "block";
-	document.getElementById("admin1").style.display = "block";}
+	document.getElementById("admin1").style.display = "block";
+	document.getElementById("admin2").style.display = "block";}
 	else{
 		document.getElementById("admin").style.display = "none";
-		document.getElementById("admin1").style.display = "none";
+		document.getElementById("admin1").style.display = "none"
+		document.getElementById("admin2").style.display = "none";
 	}
 });
 </script>
@@ -147,7 +149,7 @@ $(document).ready(function (){
         <li><a href="Profile.html">Profile</a></li>
         <li id='admin'><a href="PostJobs.html">Post Jobs</a></li>
         <li id='admin1'><a href="AppliedJobs.html">Applied Jobs</a></li>
-        <li id='admin1'><a href="graphJobs.html">Graph</a></li>
+        <li id='admin2'><a href="graphJobs.html">Graph</a></li>
         <li><a href=index.html onClick=logout()>
           <span class="glyphicon glyphicon-log-out"></span> Log out
 	 </a></li>

@@ -239,6 +239,9 @@ public class EConnectServiceImpl implements EConnectService
 		Integer fs = 0;
 		
 		for (GetJobsResponse getJobsResponse : getJobsResponseList) {
+			
+			if (getJobsResponse.getJobTitle() != null && getJobsResponse.getJobType() != null) {
+				
 			//Internship UI Developer
 			if (getJobsResponse.getJobType().equalsIgnoreCase("Internship") && 
 					getJobsResponse.getJobTitle().equalsIgnoreCase("UI Developer")) {
@@ -283,6 +286,7 @@ public class EConnectServiceImpl implements EConnectService
 			if (getJobsResponse.getJobType().equalsIgnoreCase("Full-Time") && 
 					getJobsResponse.getJobTitle().equalsIgnoreCase("Software Engineer")) {
 				fs++;
+			}
 			}
 		}
 		jobCountResponse.setIu(iu);
